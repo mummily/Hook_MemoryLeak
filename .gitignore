@@ -30,3 +30,6 @@
 *.exe
 *.out
 *.app
+/.vs/MemoryLeaker/v15
+/HookDll/.vs/HookDll/v15
+/MemoryLeaker/.vs/MemoryLeaker/v15
