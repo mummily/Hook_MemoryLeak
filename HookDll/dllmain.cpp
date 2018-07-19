@@ -11,9 +11,9 @@
 using namespace std;
 
 typedef void * (__cdecl * PFN_MALLOC)(size_t _Size);
-typedef void (__cdecl * PFN_FREE)(void* _Block);
+typedef void(__cdecl * PFN_FREE)(void* _Block);
 PFN_MALLOC g_pMalloc = malloc;
-PFN_FREE   g_pFree   = free;
+PFN_FREE   g_pFree = free;
 
 static const int MAX_STACK_FRAMES = 10;
 
@@ -91,7 +91,7 @@ string TraceStack(WORD frames, void *pStack[MAX_STACK_FRAMES])
 {
     std::ostringstream os;
     os << "stack traceback: " << std::endl;
-    for (WORD i = 0; i < frames; ++i) 
+    for (WORD i = 0; i < frames; ++i)
     {
         DWORD64 address = (DWORD64)(pStack[i]);
 
@@ -105,11 +105,11 @@ string TraceStack(WORD frames, void *pStack[MAX_STACK_FRAMES])
         IMAGEHLP_LINE64 line;
         line.SizeOfStruct = sizeof(IMAGEHLP_LINE64);
         if (SymFromAddr(g_process, address, &displacementSym, pSymbol)
-            && SymGetLineFromAddr64(g_process, address, &displacementLine, &line)) 
+            && SymGetLineFromAddr64(g_process, address, &displacementLine, &line))
         {
             os << "\t" << pSymbol->Name << " at " << line.FileName << ":" << line.LineNumber << "(0x" << std::hex << pSymbol->Address << std::dec << ")" << std::endl;
         }
-        else 
+        else
         {
             os << "\terror: " << GetLastError() << std::endl;
         }
